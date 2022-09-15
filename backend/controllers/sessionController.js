@@ -1,10 +1,14 @@
 const asyncHandler = require('express-async-handler')
 
+const Session = require('../model/sessionsModel')
+
 // @desc Get sessions
 // @route GET /api/sessions
 //@access Private
 const getSessions = asyncHandler (async (req, res) => {
-    res.status(200).json({ message: 'Get Sessions'})
+const sessions = await Session.find()
+
+    res.status(200).json(Session)
 })
 
 // @desc Set sessions
