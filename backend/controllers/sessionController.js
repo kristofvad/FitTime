@@ -8,7 +8,7 @@ const Session = require('../model/sessionsModel')
 const getSessions = asyncHandler (async (req, res) => {
 const sessions = await Session.find()
 
-    res.status(200).json(Session)
+    res.status(200).json(sessions)
 })
 
 // @desc Set sessions
@@ -20,19 +20,41 @@ const setSession = asyncHandler( async (req, res) => {
         throw new Error('Add a text field')
     }
 
-res.status(200).json({ message: 'Set Session'})
+    const session = await Session.create({
+        text: req.body.text
+    })
+
+    res.status(200).json(session)
 })
 // @desc Update sessions
 // @route PUT /api/sessions/:id
 //@access Private
 const updateSession = asyncHandler( async (req, res) => {
-    res.status(200).json({message: `Update session ${req.params.id}`})
+    const session = await Session.findById(req.params.id)
+
+    if(!session){
+        res.status(400)
+        throw new Error('Session not found')
+    }
+
+    const updatedSession = await Session.findByIdAndUpdate(req.params.id, req.body, {new: true})
+
+    res.status(200).json(updatedSession)
 })
 // @desc Delete sessions
 // @route DELETE /api/sessions/:id
 //@access Private
 const deleteSession = asyncHandler( async (req, res) => {
-    res.status(200).json({message: `Delete session ${req.params.id}`})
+    const session = await Session.findById(req.params.id)
+
+    if(!session){
+        res.status(400)
+        throw new Error('Session not found')
+    }
+    
+    await session.remove()
+
+    res.status(200).json({id: req.params.id})
 })
 
 module.exports = 
