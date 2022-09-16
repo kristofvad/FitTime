@@ -1,12 +1,13 @@
 const asyncHandler = require('express-async-handler')
 
 const Session = require('../model/sessionsModel')
+const User = require('../model/userModel')
 
 // @desc Get sessions
 // @route GET /api/sessions
 //@access Private
 const getSessions = asyncHandler (async (req, res) => {
-const sessions = await Session.find()
+const sessions = await Session.find({ user: req.user.id })
 
     res.status(200).json(sessions)
 })
@@ -21,7 +22,8 @@ const setSession = asyncHandler( async (req, res) => {
     }
 
     const session = await Session.create({
-        text: req.body.text
+        text: req.body.text,
+        user: req.user.id
     })
 
     res.status(200).json(session)
@@ -37,6 +39,20 @@ const updateSession = asyncHandler( async (req, res) => {
         throw new Error('Session not found')
     }
 
+    const user = await User.findById(req.user.id)
+
+    //Check for user
+    if(!user){
+        res.status(401)
+        throw new Error ('User not found')
+    }
+
+    // Make sure the logged in user matches the session user
+    if(session.user.toString() !== user.id){
+        res.status(401)
+        throw new Error('User not authorized')
+    }
+
     const updatedSession = await Session.findByIdAndUpdate(req.params.id, req.body, {new: true})
 
     res.status(200).json(updatedSession)
@@ -50,6 +66,20 @@ const deleteSession = asyncHandler( async (req, res) => {
     if(!session){
         res.status(400)
         throw new Error('Session not found')
+    }
+
+    const user = await User.findById(req.user.id)
+
+    //Check for user
+    if(!user){
+        res.status(401)
+        throw new Error ('User not found')
+    }
+
+    // Make sure the logged in user matches the session user
+    if(session.user.toString() !== user.id){
+        res.status(401)
+        throw new Error('User not authorized')
     }
     
     await session.remove()

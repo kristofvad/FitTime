@@ -7,7 +7,9 @@ const {
     deleteSession
 } = require('../controllers/sessionController')
 
-router.route('/').get(getSessions).post(setSession)
-router.route('/:id').put(updateSession).delete(deleteSession)
+const {protect} = require('../middleware/authMiddleware')
+
+router.route('/').get(protect, getSessions).post(protect, setSession)
+router.route('/:id').put(protect, updateSession).delete(protect, deleteSession)
 
 module.exports = router
