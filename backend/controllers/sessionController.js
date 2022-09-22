@@ -39,16 +39,14 @@ const updateSession = asyncHandler( async (req, res) => {
         throw new Error('Session not found')
     }
 
-    const user = await User.findById(req.user.id)
-
     //Check for user
-    if(!user){
+    if(!req.user){
         res.status(401)
         throw new Error ('User not found')
     }
 
     // Make sure the logged in user matches the session user
-    if(session.user.toString() !== user.id){
+    if(session.user.toString() !== req.user.id){
         res.status(401)
         throw new Error('User not authorized')
     }
@@ -68,16 +66,14 @@ const deleteSession = asyncHandler( async (req, res) => {
         throw new Error('Session not found')
     }
 
-    const user = await User.findById(req.user.id)
-
     //Check for user
-    if(!user){
+    if(!req.user){
         res.status(401)
         throw new Error ('User not found')
     }
 
     // Make sure the logged in user matches the session user
-    if(session.user.toString() !== user.id){
+    if(session.user.toString() !== req.user.id){
         res.status(401)
         throw new Error('User not authorized')
     }
