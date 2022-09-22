@@ -40,6 +40,22 @@ export const getSessions = createAsyncThunk('sessions/getAll', async (_,thunkAPI
     }
 })
 
+//Delete new session
+export const deleteSession = createAsyncThunk('sessions/delete', async(id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await sessionService.deleteSession(id, token)
+    } catch (error) {
+        const message = (
+            error.response && 
+            error.response.data && 
+            error.response.data.message) || 
+            error.message || 
+            error.toString()
+            return thunkAPI.rejectWithValue(message)
+    }
+})
+
 export const sessionSlice = createSlice({
     name: 'session',
     initialState,
@@ -70,6 +86,19 @@ export const sessionSlice = createSlice({
             state.sessions = action.payload
         })
         .addCase(getSessions.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+        })
+        .addCase(deleteSession.pending, (state) => {
+            state.isLoading = true
+        })
+        .addCase(deleteSession.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.sessions = state.sessions.filter((session) => session._id !== action.payload.id)
+        })
+        .addCase(deleteSession.rejected, (state, action) => {
             state.isLoading = false
             state.isError = true
             state.message = action.payload
