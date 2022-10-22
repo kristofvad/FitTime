@@ -43,10 +43,25 @@ const deleteSession = async (sessionId,  token) => {
     return response.data
 }
 
+//Update user session
+const updateSession = async (sessionId, sessionData, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    }
+
+    const response = await axios.put(API_URL + sessionId, sessionData, config)
+
+
+    return response.data
+}
+
 const sessionService = {
     createSession,
     getSessions,
-    deleteSession
+    deleteSession,
+    updateSession
 }
 
 export default sessionService

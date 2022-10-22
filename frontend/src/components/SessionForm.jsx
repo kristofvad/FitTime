@@ -4,7 +4,8 @@ import {createSession} from '../features/sessions/sessionSlice'
 
 function SessionForm() {
 
-    const [text, setText] = useState('')
+  
+  const [text, setText] = useState("");
 
     const dispatch = useDispatch()
 

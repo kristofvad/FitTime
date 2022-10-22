@@ -1,8 +1,7 @@
 import {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import {toast} from 'react-toastify'
-import {FaUser} from 'react-icons/fa'
 import {register, reset} from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
 
@@ -66,16 +65,14 @@ function Register() {
     }
 
   return <>
-  <section className='heading'>
-    <h1>
-        <FaUser /> Register
-    </h1>
-    <p>Please create an account</p>
-  </section>
+  <div className="auth-box">
+    <h2>
+        Register
+    </h2>
+  
 
-  <section className='form'>
     <form onSubmit={onSubmit}>
-        <div className="form-group">
+        <div className="user-box">
             <input 
             type='text'
             className='form-control' 
@@ -86,7 +83,7 @@ function Register() {
             onChange={onChange}
             />
         </div>
-        <div className="form-group">
+        <div className="user-box">
             <input 
             type='email'
             className='form-control' 
@@ -97,7 +94,7 @@ function Register() {
             onChange={onChange}
             />
         </div>
-        <div className="form-group">
+        <div className="user-box">
             <input 
             type='password'
             className='form-control' 
@@ -108,7 +105,7 @@ function Register() {
             onChange={onChange}
             />
         </div>
-        <div className="form-group">
+        <div className="user-box">
         <input 
             type='password'
             className='form-control' 
@@ -119,11 +116,20 @@ function Register() {
             onChange={onChange}
             />
         </div>
-        <div className="form-group">
-            <button type="submit" className='btn btn-block'>Submit</button>
+        <div className="user-box">
+            <button type="submit" id="submit" >Submit</button>
+            
+            <div id="register">
+            
+            Already have an account?
+              <Link to='/login'>
+                Login
+              </Link>
+              </div>
         </div>
     </form>
-  </section>
+  
+  </div>
   </>
 }
 

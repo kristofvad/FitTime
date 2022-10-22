@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import SessionForm from '../components/SessionForm'
@@ -6,10 +6,12 @@ import SessionItem from '../components/SessionItem'
 import Spinner from '../components/Spinner'
 import { getSessions, reset } from '../features/sessions/sessionSlice'
 
+
 function Dashboard() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  const [showForm, setShowForm] = useState(false)
   const { user } = useSelector((state) => state.auth)
   const { sessions, isLoading, isError, message } = useSelector(
     (state) => state.sessions
@@ -35,21 +37,30 @@ function Dashboard() {
     return <Spinner />
   }
 
+  const form = () => {
+    setShowForm(!showForm);
+    
+  }
+
   return (
     <>
       <section className='heading'>
-        <h1>Welcome {user && user.name}</h1>
+        <h1 style={{color: 'white'}}>Welcome {user && user.name}</h1>
         <p>Sessions Dashboard</p>
       </section>
 
-      <SessionForm />
+      <button onClick={form} className='btn' > Add </button>
+      { showForm &&
+          (<SessionForm />)}
+      
 
       <section className='content'>
         {sessions.length > 0 ? (
           <div className='sessions'>
-            {sessions.map((session) => (
+           {sessions.map ((session) => (
               <SessionItem key={session._id} session={session} />
-            ))}
+           ))}
+            
           </div>
         ) : (
           <h3>You have not set any sessions</h3>

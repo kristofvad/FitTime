@@ -34,6 +34,11 @@ const setSession = asyncHandler( async (req, res) => {
 const updateSession = asyncHandler( async (req, res) => {
     const session = await Session.findById(req.params.id)
 
+    if(!req.body.text) {
+        res.status(400)
+        throw new Error('Add a text field')
+    }
+
     if(!session){
         res.status(400)
         throw new Error('Session not found')

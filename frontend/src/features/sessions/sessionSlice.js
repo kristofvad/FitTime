@@ -9,6 +9,7 @@ const initialState = {
     message: ''
 }
 
+
 //Create new session
 export const createSession = createAsyncThunk('sessions/create', async(sessionData, thunkAPI) => {
     try {
@@ -56,6 +57,24 @@ export const deleteSession = createAsyncThunk('sessions/delete', async(id, thunk
     }
 })
 
+//Update new session
+export const updateSession = createAsyncThunk('sessions/update', async(id, sessionData, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await sessionService.updateSession(id, sessionData, token)
+        
+    } catch (error) {
+        const message = (
+            error.response && 
+            error.response.data && 
+            error.response.data.message) || 
+            error.message || 
+            error.toString()
+            return thunkAPI.rejectWithValue(message)
+    }
+})
+
+
 export const sessionSlice = createSlice({
     name: 'session',
     initialState,
@@ -99,6 +118,19 @@ export const sessionSlice = createSlice({
             state.sessions = state.sessions.filter((session) => session._id !== action.payload.id)
         })
         .addCase(deleteSession.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+        })
+        .addCase(updateSession.pending, (state) => {
+            state.isLoading = true
+        })
+        .addCase(updateSession.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.sessions.push(action.payload)
+        })
+        .addCase(updateSession.rejected, (state, action) => {
             state.isLoading = false
             state.isError = true
             state.message = action.payload
