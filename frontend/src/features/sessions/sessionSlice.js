@@ -58,7 +58,7 @@ export const deleteSession = createAsyncThunk('sessions/delete', async(id, thunk
 })
 
 //Update new session
-export const updateSession = createAsyncThunk('sessions/update', async(id, sessionData, thunkAPI) => {
+export const updateSession = createAsyncThunk('sessions/update', async({id, sessionData} , thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
         return await sessionService.updateSession(id, sessionData, token)
