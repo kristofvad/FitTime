@@ -62,7 +62,12 @@ const loginUser = asyncHandler( async(req, res) => {
             email: user.email,
             token: generateToken(user._id)
         })
-    } else {
+    } else if(jwt.TokenExpiredError) {
+        generateToken = (id) => {
+            return jwt.sign({ id }, process.env.JWT_SECRET, {expiresIn: '30d',})
+        }
+    }
+    else {
         res.status(400)
         throw new Error('Invalid credentials')
     }

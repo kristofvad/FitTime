@@ -20,13 +20,22 @@
   },
   "homepage": "https://github.com/kristofvad/FitTime#readme",
   "dependencies": {
+    "@rcaferati/wac": "^1.0.0",
     "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.2.3",
     "colors": "^1.4.0",
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.6.1"
+    "mongoose": "^6.6.1",
+    "path": "^0.12.7",
+    "react-awesome-slider": "^4.1.0",
+    "react-background-slider": "^3.0.0-0",
+    "react-bootstrap": "^2.6.0",
+    "react-dom": "^18.2.0",
+    "sass": "^1.56.1",
+    "swiper": "^8.3.2"
   },
   "devDependencies": {
     "concurrently": "^7.4.0",

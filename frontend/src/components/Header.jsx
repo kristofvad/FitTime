@@ -1,4 +1,4 @@
-import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
+import { FaSignOutAlt } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
@@ -15,6 +15,7 @@ function Header() {
   }
 
   return (
+  <div className="front_header">
     <header className='header'>
       <div className='logo'>
         <Link to='/'>FitTime</Link>
@@ -42,6 +43,7 @@ function Header() {
         )}
       </ul>
     </header>
+    </div>
   )
 }
 

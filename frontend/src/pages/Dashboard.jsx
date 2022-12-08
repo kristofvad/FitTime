@@ -21,7 +21,7 @@ function Dashboard() {
     if (isError) {
       console.log(message)
     }
-
+    
     if (!user) {
       navigate('/login')
     } else {
@@ -44,28 +44,30 @@ function Dashboard() {
 
   return (
     <>
-      <section className='heading'>
-        <h1 style={{color: 'white'}}>Welcome {user && user.name}</h1>
-        <p>Sessions Dashboard</p>
-      </section>
+      <div className="body">
+        <section className='heading'>
+          <h1 style={{color: 'white'}}>Welcome {user && user.name}</h1>
+          <p>Sessions Dashboard</p>
+        </section>
 
-      <button onClick={form} className='btn' > Add </button>
-      { showForm &&
-          (<SessionForm />)}
-      
+        <button onClick={form} className='btn' > Add </button>
+        { showForm &&
+            (<SessionForm />)}
+        
 
-      <section className='content'>
-        {sessions.length > 0 ? (
-          <div className='sessions'>
-           {sessions.map ((session) => (
-              <SessionItem key={session._id} session={session} />
-           ))}
-            
-          </div>
-        ) : (
-          <h3>You have not set any sessions</h3>
-        )}
-      </section>
+        <section className='content'>
+          {sessions.length > 0 ? (
+            <div className='sessions'>
+            {sessions.map ((session) => (
+                <SessionItem key={session._id} session={session} />
+            ))}
+              
+            </div>
+          ) : (
+            <h3>You have not set any sessions</h3>
+          )}
+        </section>
+        </div>
     </>
   )
 }

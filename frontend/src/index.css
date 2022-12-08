@@ -51,8 +51,9 @@ h3 {
   justify-content: space-between;
   align-items: center;
   padding: 20px 0;
-  border-bottom: 1px solid #e6e6e6;
   margin-bottom: 60px;
+
+  
 }
 
 .header ul {
@@ -233,6 +234,13 @@ h3 {
     justify-content: space-between;
   }
 
+  .background {
+        position: "center";
+        size: "cover";
+        width: "1000px";
+        height: "1000px",
+  }
+
  .auth-box {
     position: absolute;
     top: 50%;
@@ -323,5 +331,28 @@ h3 {
     margin: auto;
     color: #bf00ff;
     text-decoration: none;
+}
+
+/*#wrapper{
+  position: center;
+}*/
+
+.front_header{
+  color: #ffffff;
+  position: relative;
+  z-index: 200;
+
+}
+
+.front{
+  color: #FFFFFF;
+  position: relative;
+  z-index: 100;
+  top: 250px;
+}
+
+.back{
+  position: center;
+  z-index: -100;
 }
 
