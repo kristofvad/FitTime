@@ -62,12 +62,11 @@ function Login() {
 
   return (
     <>
-   
       <div className="back">
         <AutoplaySlider
           play={true}
           cancelOnInteraction={false} // should stop playing on user interaction
-          interval={8000}
+          interval={5000}
           organicArrows={false}
           bullets={false}
           fillParent={true}

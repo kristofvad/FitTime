@@ -16,13 +16,16 @@ const sessions = await Session.find({ user: req.user.id })
 // @route POST /api/sessions
 //@access Private
 const setSession = asyncHandler( async (req, res) => {
-    if(!req.body.text) {
+    const { title, desc} = req.body
+    if(!title) {
         res.status(400)
         throw new Error('Add a text field')
     }
 
+    // Create session
     const session = await Session.create({
-        text: req.body.text,
+        title,
+        desc,
         user: req.user.id
     })
 
@@ -33,8 +36,9 @@ const setSession = asyncHandler( async (req, res) => {
 //@access Private
 const updateSession = asyncHandler( async (req, res) => {
     const session = await Session.findById(req.params.id)
+    const { title, desc} = req.body
 
-    if(!req.body.text) {
+    if(!title) {
         res.status(400)
         throw new Error('Add a text field')
     }
@@ -94,5 +98,4 @@ module.exports =
     setSession,
     updateSession,
     deleteSession
-
 }

@@ -8,7 +8,7 @@
 }
 
 body {
-  background: #024727;
+  background: #2f6b4f;
   font-family: 'Poppins', sans-serif;
   height: 100vh;
 }
@@ -33,27 +33,35 @@ li {
 h1,
 h2,
 h3 {
-  font-weight: 600;
+  font-weight: 0;
   margin-bottom: 10px;
   
 }
 
 .container {
+  
+  min-width: 100%;
   width: 100%;
-  max-width: 960px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 100px -50px;
   text-align: center;
 }
+
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 0;
   margin-bottom: 60px;
-
+  padding: 20px;
   
+  height: 70px;
+	width: 100%;
+	background: rgb(27, 27, 27);
+	font-size: 1.2rem;
+  
+  position: relative;
+  z-index: 100;
 }
 
 .header ul {
@@ -98,7 +106,7 @@ h3 {
 
 .goal {
   background-color: #f4f4f4;
-  margin: 10px 0;
+  margin: 50px 0;
   padding: 20px 0 10px;
   position: relative;
 }
@@ -112,7 +120,19 @@ h3 {
   background: none;
 }
 
-.form,
+.form {
+  background-color: #f4f4f4;
+  padding: 20px;
+  width: 70%;
+  margin: 15px auto;
+  border-radius: 10px;
+}
+
+.form_update{
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 10px;
+}
 .content {
   width: 70%;
   margin: 0 auto;
@@ -139,6 +159,75 @@ h3 {
   margin: 0 0 5px 3px;
 }
 
+.session{
+  text-align: center;
+  display: grid;
+  width: 50%;
+  align-items: center;
+  margin-left: -7%;
+  position: relative;
+} 
+
+.session_expand{
+  text-align: center;
+  display: grid;
+  max-width: 70%;
+  align-items: center;
+  margin-left: -7%;
+  position: relative;
+} 
+
+.session_update{
+  text-align: center;
+  display: grid;
+  width: 70%;
+  align-items: center;
+  position: absolute;
+  z-index: 100px;
+  margin-left: 20%;
+  margin-top: 30%;
+} 
+
+.session_add{
+  text-align: center;
+  display: grid;
+  width: 50%;
+  align-items: center;
+  margin-left: 5%;
+} 
+
+.task {
+  background: #ffffff;
+  margin: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.task_expand {
+  background: #ffffff;
+  margin: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.task.reminder {
+  border-left: 5px solid green;
+}
+
+.task h3 {
+  display: flex;
+  align-items: left;
+  justify-content: space-between;
+}
+
+.task h1 {
+  display: flex;
+  align-items: left;
+  justify-content: space-between;
+}
+
 .btn {
   padding: 10px 20px;
   border: 1px solid #000;
@@ -154,6 +243,41 @@ h3 {
   align-items: center;
   justify-content: center;
 }
+
+.session_actions {
+  text-align: center;
+  display: flex;
+  align-items: center;
+} 
+
+.btn_edit {
+  background-color: transparent;
+  margin-right: 10%;
+  border-color: transparent;
+}
+
+.btn_delete {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.btn_add {
+  margin-left: 10%;
+  padding: 10px 20px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  background: #000;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  appearance: button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 .btn svg {
   margin-right: 8px;
@@ -217,22 +341,6 @@ h3 {
     font-size: 1.5rem;
   }
 }
-.task {
-    background: #f4f4f431;
-    margin: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-  }
-  
-  .task.reminder {
-    border-left: 5px solid green;
-  }
-  
-  .task h3 {
-    display: flex;
-    align-items: left;
-    justify-content: space-between;
-  }
 
   .background {
         position: "center";
@@ -340,7 +448,7 @@ h3 {
 .front_header{
   color: #ffffff;
   position: relative;
-  z-index: 200;
+  z-index: 100;
 
 }
 
@@ -348,11 +456,10 @@ h3 {
   color: #FFFFFF;
   position: relative;
   z-index: 100;
-  top: 250px;
+  top: 275px;
 }
 
 .back{
   position: center;
   z-index: -100;
 }
-

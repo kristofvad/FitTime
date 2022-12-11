@@ -74,13 +74,13 @@ function Register() {
             <AutoplaySlider
             play={true}
             cancelOnInteraction={false} // should stop playing on user interaction
-            interval={8000}
+            interval={5000}
             organicArrows={false}
             bullets={false}
             fillParent={true}
             >
-            <div data-src="/pic_1.jpg" />
             <div data-src="/pic_2.jpg" />
+            <div data-src="/pic_1.jpg" />
             <div data-src="/pic_3.jpg" />
             <div data-src="/pic_4.jpg" />
             <div data-src="/pic_5.jpg" />

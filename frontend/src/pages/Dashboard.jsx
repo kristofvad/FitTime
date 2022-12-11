@@ -5,6 +5,7 @@ import SessionForm from '../components/SessionForm'
 import SessionItem from '../components/SessionItem'
 import Spinner from '../components/Spinner'
 import { getSessions, reset } from '../features/sessions/sessionSlice'
+import { logout } from '../features/auth/authSlice'
 
 
 function Dashboard() {
@@ -24,6 +25,7 @@ function Dashboard() {
     
     if (!user) {
       navigate('/login')
+      dispatch(logout())
     } else {
       dispatch(getSessions())
     }
@@ -39,7 +41,6 @@ function Dashboard() {
 
   const form = () => {
     setShowForm(!showForm);
-    
   }
 
   return (
@@ -50,10 +51,11 @@ function Dashboard() {
           <p>Sessions Dashboard</p>
         </section>
 
-        <button onClick={form} className='btn' > Add </button>
+        <button onClick={form} className='btn_add' > Add </button>
+       <div>
         { showForm &&
             (<SessionForm />)}
-        
+        </div>
 
         <section className='content'>
           {sessions.length > 0 ? (
@@ -67,6 +69,7 @@ function Dashboard() {
             <h3>You have not set any sessions</h3>
           )}
         </section>
+        
         </div>
     </>
   )

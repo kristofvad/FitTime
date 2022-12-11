@@ -7,9 +7,13 @@ const sessionSchema = mongoose.Schema(
             required: true,
             ref: 'User',
         },
-        text: {
+        title: {
             type: String,
             required: [true, 'Please add a text value'],
+        },
+        desc: {
+            type: String,
+            required: false,
         },
     }, 
     {
