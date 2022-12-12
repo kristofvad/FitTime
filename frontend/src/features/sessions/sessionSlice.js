@@ -1,4 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import authService from '../auth/authService'
+import { logout } from '../auth/authSlice';
 import sessionService from './sessionService'
 
 const initialState = {
@@ -31,6 +33,9 @@ export const getSessions = createAsyncThunk('sessions/getAll', async (_,thunkAPI
         const token = thunkAPI.getState().auth.user.token
         return await sessionService.getSessions(token)
     } catch (error) {
+        if (authService.isAuthIssue(error)) {
+            return thunkAPI.dispatch(logout());
+        }
         const message = (
             error.response && 
             error.response.data && 

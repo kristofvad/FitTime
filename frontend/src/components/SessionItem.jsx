@@ -3,6 +3,8 @@ import { FaEdit } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import {deleteSession, updateSession} from '../features/sessions/sessionSlice'
 import { useState } from 'react';
+import SessionForm from './SessionForm';
+import { useCallback } from 'react';
 
 function SessionItem({session}) {
   const [showForm, setShowForm] = useState(false)
@@ -11,14 +13,7 @@ function SessionItem({session}) {
   const [subtr, setSubtr] = useState(session.desc?.substring(0,10))
   const [isActive, setIsActive] = useState(true);
 
-    const [sessionData, setSessionData] = useState({
-        title: '',
-        desc: '',
-      })
-      
-    const {title, desc} = sessionData
-
-  const onSubmit = (e) => {
+  /*const onSubmit = (e) => {
     e.preventDefault();
 
     const sessionData = {
@@ -26,20 +21,27 @@ function SessionItem({session}) {
         desc,
     }
     dispatch(updateSession(session._id, {sessionData}))
-}
+}*/
   
   const form = () => {
     setShowForm(!showForm);
     
   }
 
-  const onChange = (e) => {
+  /*const onChange = (e) => {
     setSessionData((prevSate) => ({
         ...prevSate,
         [e.target.name]: e.target.value,
 
     }))
-}
+}*/
+
+  const onUpdateSession = useCallback((updatedSession) => {
+    dispatch(updateSession({
+      ...updatedSession,
+      id: session._id,
+    }));
+  }, [dispatch, session._id]);
 
     
 
@@ -70,33 +72,7 @@ function SessionItem({session}) {
             <div className="form_update">
             {"Update Session"}
                 <section className='form'>
-                <form onSubmit={onSubmit}>
-                <div className='form-group'>
-                    <input
-                    type='text'
-                    name='title'
-                    id='title'
-                    value={title}
-                    placeholder={session.title}
-                    onChange={onChange}
-                    />
-                </div>
-                <div className='form-group'>
-                    <input
-                    type='text'
-                    name='desc'
-                    id='desc'
-                    placeholder={session.desc}
-                    value={desc}
-                    onChange={onChange}
-                    />
-                </div>
-                <div className='form-group'>
-                    <button className='btn btn-block'>
-                    Update Session
-                    </button>
-                </div>
-                </form>
+                <SessionForm session={session} onSubmit={onUpdateSession} />
                 </section>
             </div>
         </div>

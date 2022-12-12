@@ -1,13 +1,12 @@
+import { useCallback } from 'react';
+import { useEffect } from 'react';
 import {useState} from 'react'
 import {useDispatch} from 'react-redux'
 import {createSession} from '../features/sessions/sessionSlice'
 
-function SessionForm() {
+function SessionForm({ session, onSubmit }) {
 
-  const [sessionData, setSessionData] = useState({
-    title: '',
-    desc: '',
-  })
+  const [sessionData, setSessionData] = useState(session);
 
   const {title, desc} = sessionData
 
@@ -19,9 +18,15 @@ function SessionForm() {
         [e.target.name]: e.target.value,
 
     }))
-}
+  }
 
-    const onSubmit = (e) => {
+  useEffect(() => {
+    if (sessionData.title === '') {
+      
+    }
+  }, [sessionData.title]);
+
+    /*const onSubmit = (e) => {
         e.preventDefault()
 
         const sessionData = {
@@ -29,7 +34,12 @@ function SessionForm() {
           desc,
       }
         dispatch(createSession(sessionData))
-    }
+    }*/
+
+    const submitHandler = useCallback((event) => {
+      event.preventDefault();
+      onSubmit(sessionData);
+    }, [sessionData, onSubmit]);
 
     return (
       <div className="session_add">
