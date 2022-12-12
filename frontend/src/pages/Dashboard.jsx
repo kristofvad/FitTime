@@ -4,8 +4,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import SessionForm from '../components/SessionForm'
 import SessionItem from '../components/SessionItem'
 import Spinner from '../components/Spinner'
-import { getSessions, reset } from '../features/sessions/sessionSlice'
+import { createSession, getSessions, reset } from '../features/sessions/sessionSlice'
 import { logout } from '../features/auth/authSlice'
+import { useCallback } from 'react'
 
 
 function Dashboard() {
@@ -35,6 +36,11 @@ function Dashboard() {
     }
   }, [user, navigate, isError, message, dispatch])
 
+  const onCreateSession = useCallback((sessionData) => {
+    dispatch(createSession(sessionData));
+    setShowForm(false);
+  }, [dispatch]);
+
   if (isLoading) {
     return <Spinner />
   }
@@ -54,14 +60,14 @@ function Dashboard() {
         <button onClick={form} className='btn_add' > Add </button>
        <div>
         { showForm &&
-            (<SessionForm />)}
+            (<SessionForm session={{ title: '', desc: '' }} onSubmit={onCreateSession} />)}
         </div>
 
         <section className='content'>
           {sessions.length > 0 ? (
             <div className='sessions'>
             {sessions.map ((session) => (
-                <SessionItem key={session._id} session={session} />
+              <SessionItem key={session._id} session={session} />
             ))}
               
             </div>

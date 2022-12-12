@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const API_URL = 'api/sessions/'
 
+
 //Create new session
 const createSession = async (sessionData,  token) => {
     const config = {

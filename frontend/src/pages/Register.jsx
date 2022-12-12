@@ -7,6 +7,7 @@ import Spinner from '../components/Spinner'
 import AwesomeSlider from 'react-awesome-slider';
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
 import 'react-awesome-slider/dist/styles.css';
+import React from 'react'
 
 function Register() {
     const [formData, setFormData] = useState({

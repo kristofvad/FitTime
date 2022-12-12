@@ -29,10 +29,15 @@ const logout = () => {
     localStorage.removeItem('user')
   }
 
+const isAuthIssue = (err) => {
+    return true
+}
+
 const authService = {
     register,
     logout,
-    login
+    login,
+    isAuthIssue,
 }
 
 export default authService

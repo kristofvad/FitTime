@@ -1,22 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { login, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
 import AwesomeSlider from 'react-awesome-slider';
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
 import 'react-awesome-slider/dist/styles.css';
+import { LoginForm } from '../components/LoginForm'
 
 function Login() {
-
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  })
-
-  const { email, password } = formData
-
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -36,23 +29,9 @@ function Login() {
     dispatch(reset())
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
-  const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }))
-  }
-
-  const onSubmit = (e) => {
-    e.preventDefault()
-
-    const userData = {
-      email,
-      password,
-    }
-
+  const submitLogin = useCallback((userData) => {
     dispatch(login(userData))
-  }
+  }, [dispatch]);
 
   if (isLoading) {
     return <Spinner />
@@ -84,42 +63,7 @@ function Login() {
           <h2>Login</h2>
 
           <section className="user-box">
-            <form onSubmit={onSubmit}>
-                <input
-                  type='email'
-                  className='form-control'
-                  id='email'
-                  name='email'
-                  value={email}
-                  placeholder='Enter your email'
-                  onChange={onChange}
-                />
-              <div className="user-box">
-                <input
-                  type='password'
-                  className='form-control'
-                  id='password'
-                  name='password'
-                  value={password}
-                  placeholder='Enter password'
-                  onChange={onChange}
-                />
-              </div>
-
-              <div className='button-form'>
-              <button type='submit' id="submit">
-                  Submit
-                </button>
-
-              <div id="register">
-                Dont have an account ?
-                  <Link to='/register'>
-                    Register
-                  </Link>
-                
-              </div>
-                </div>
-            </form>
+            <LoginForm onSubmit={submitLogin} />
           </section>
         </div>
     </div>

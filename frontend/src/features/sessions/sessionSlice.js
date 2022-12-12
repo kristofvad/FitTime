@@ -1,4 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import authService from '../auth/authService'
+import { logout } from '../auth/authSlice';
 import sessionService from './sessionService'
 
 const initialState = {
@@ -31,6 +33,9 @@ export const getSessions = createAsyncThunk('sessions/getAll', async (_,thunkAPI
         const token = thunkAPI.getState().auth.user.token
         return await sessionService.getSessions(token)
     } catch (error) {
+        if (authService.isAuthIssue(error)) {
+            return thunkAPI.dispatch(logout());
+        }
         const message = (
             error.response && 
             error.response.data && 
@@ -61,8 +66,7 @@ export const deleteSession = createAsyncThunk('sessions/delete', async(id, thunk
 export const updateSession = createAsyncThunk('sessions/update', async({id, sessionData} , thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
-        return await sessionService.updateSession(id, sessionData, token)
-        
+        return sessionService.updateSession(id, sessionData, token)
     } catch (error) {
         const message = (
             error.response && 
@@ -128,7 +132,12 @@ export const sessionSlice = createSlice({
         .addCase(updateSession.fulfilled, (state, action) => {
             state.isLoading = false
             state.isSuccess = true
-            state.sessions.push(action.payload)
+            state.sessions = state.sessions.map((item) => {
+                if (item._id === action.payload._id) {
+                    return action.payload;
+                }
+                return item;
+            });
         })
         .addCase(updateSession.rejected, (state, action) => {
             state.isLoading = false

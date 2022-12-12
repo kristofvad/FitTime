@@ -1,4 +1,3 @@
-
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
@@ -22,11 +21,18 @@ function Header() {
       </div>
       <ul>
         {user ? (
-          <li>
-            <button className='btn' onClick={onLogout}>
-              Logout
-            </button>
-          </li>
+          <>
+            <li>
+              <Link to='/profile'>
+                Profile
+              </Link>
+            </li>
+            <li>
+              <button className='btn' onClick={onLogout}>
+                Logout
+              </button>
+            </li>
+          </>
         ) : (
           <>
             <li>
