@@ -123,9 +123,14 @@ h3 {
 .form {
   background-color: #f4f4f4;
   padding: 20px;
-  width: 70%;
+  width: 100%;
   margin: 15px auto;
   border-radius: 10px;
+}
+
+.form_contain {
+  background-color: #f4f4f4;
+  width: 100%;
 }
 
 .form_update{
@@ -159,6 +164,34 @@ h3 {
   margin: 0 0 5px 3px;
 }
 
+.profile {
+  background-color: #f4f4f4;
+  text-align: center;
+  display: block;
+  width: 40%;
+  height: 500px;
+  position:relative;
+  align-items: center;
+  border-radius: 10px;
+  
+  margin-left: auto;
+    margin-right: auto
+}
+
+.profile-box .profile-box cont {
+  position: relative;
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #232024;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #232024;
+  outline: none;
+  background: transparent;
+  border-radius: 5px;
+}
+
 .session{
   text-align: center;
   display: grid;
@@ -168,24 +201,34 @@ h3 {
   position: relative;
 } 
 
-.session_expand{
-  text-align: center;
-  display: grid;
-  max-width: 70%;
-  align-items: center;
-  margin-left: -7%;
-  position: relative;
+.show-less{
+  text-align: left;
+  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.show-all{
+ max-width: 100px;
+  height: auto;
+  text-align: left;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: none;
 } 
 
 .session_update{
   text-align: center;
   display: grid;
-  width: 70%;
+  width: 40%;
+  height: 40%;
   align-items: center;
-  position: absolute;
-  z-index: 100px;
-  margin-left: 20%;
-  margin-top: 30%;
+  position: fixed;
+  left: 57%;
+  top: 50%;
+  transform: translate(-20%, -20%);
+  z-index: 100;
 } 
 
 .session_add{
@@ -194,6 +237,13 @@ h3 {
   width: 50%;
   align-items: center;
   margin-left: 5%;
+} 
+
+.session_actions {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: right;
 } 
 
 .task {
@@ -244,11 +294,7 @@ h3 {
   justify-content: center;
 }
 
-.session_actions {
-  text-align: center;
-  display: flex;
-  align-items: center;
-} 
+
 
 .btn_edit {
   background-color: transparent;
