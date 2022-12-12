@@ -38,7 +38,8 @@ function Dashboard() {
 
   const onCreateSession = useCallback((sessionData) => {
     dispatch(createSession(sessionData));
-  }, []);
+    setShowForm(false);
+  }, [dispatch]);
 
   if (isLoading) {
     return <Spinner />
@@ -59,14 +60,14 @@ function Dashboard() {
         <button onClick={form} className='btn_add' > Add </button>
        <div>
         { showForm &&
-            (<SessionForm session={{ title: '', description: '' }} onSubmit={onCreateSession} />)}
+            (<SessionForm session={{ title: '', desc: '' }} onSubmit={onCreateSession} />)}
         </div>
 
         <section className='content'>
           {sessions.length > 0 ? (
             <div className='sessions'>
             {sessions.map ((session) => (
-                <SessionItem key={session._id} session={session} />
+              <SessionItem key={session._id} session={session} />
             ))}
               
             </div>

@@ -9,79 +9,48 @@ import { useCallback } from 'react';
 function SessionItem({session}) {
   const [showForm, setShowForm] = useState(false)
   const dispatch = useDispatch()
-  const [style, setStyle] = useState("session");
-  const [subtr, setSubtr] = useState(session.desc?.substring(0,10))
   const [isActive, setIsActive] = useState(true);
-
-  /*const onSubmit = (e) => {
-    e.preventDefault();
-
-    const sessionData = {
-        title,
-        desc,
-    }
-    dispatch(updateSession(session._id, {sessionData}))
-}*/
   
   const form = () => {
     setShowForm(!showForm);
-    
   }
 
-  /*const onChange = (e) => {
-    setSessionData((prevSate) => ({
-        ...prevSate,
-        [e.target.name]: e.target.value,
-
-    }))
-}*/
-
-  const onUpdateSession = useCallback((updatedSession) => {
+  const onUpdateSession = useCallback((sessionData) => {
     dispatch(updateSession({
-      ...updatedSession,
+      sessionData,
       id: session._id,
     }));
+    setShowForm(false);
   }, [dispatch, session._id]);
-
-    
-
-    function changeStyle () {
-    setStyle("session_expand");
-    setSubtr(session.desc.substring(0,250))
-
-    setIsActive(current => !current);
-  };
-
-  
 
   return (
     
-    <div className={isActive ? 'session' : 'session_expand'} onClick={changeStyle}>
-        <div className='task' >
-            <h3>
-              {session.title}
-              <br />
-              {`${subtr}`}
-        <div className='session_actions'>
-        <button onClick={form} className="btn_edit">
-        <FaEdit size={30} style={{cursor: 'pointer'}}/>
-        </button>
-          { showForm &&
-          (
-            <div className="session_update">
-            <div className="form_update">
-            {"Update Session"}
-                <section className='form'>
-                <SessionForm session={session} onSubmit={onUpdateSession} />
-                </section>
+    <div className="session">
+        <div className="task">
+            <div style={{ 'flexGrow': 1 }}>
+              <h3>{session.title}</h3>
+              <p className={isActive ? 'show-all' : 'show-less'} style={{"overflow": "hidden", "whiteSpace": "no-wrap", "textOverflow": "ellipsis"}}>{session.desc}</p>
             </div>
-        </div>
-          )}
+            <div className='session_actions' style={{"flexShrink": 0}}>
+              <button onClick={form} className="btn_edit">
+                <FaEdit size={30} style={{cursor: 'pointer'}}/>
+              </button>
+              { showForm &&
+                (
+                  <div className="session_update">
+                    <div className="form_update">
+                      {"Update Session"}
+                      <section className='form'>
+                        <SessionForm session={session} onSubmit={onUpdateSession} />
+                      </section>
+                    </div>
+                  </div>
+                )
+              }
               <button onClick={() => dispatch(deleteSession(session._id))} className="btn_delete">
                 <AiFillDelete size={30} style={{cursor: 'pointer', }}/> 
               </button>
-              </div>
-            </h3>
+            </div>
         </div>
     </div>
   )
