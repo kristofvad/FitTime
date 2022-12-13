@@ -85,8 +85,43 @@ const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {expiresIn: '30d',})
 }
 
+// @desc Update users
+// @route PUT /api/users/:id
+//@access Private
+const updateUser = asyncHandler( async (req, res) => {
+    const user = await User.findById(req.params.id)
+    const { name, email} = req.body
+
+    if(!name || !email) {
+        res.status(400)
+        throw new Error('Add a text field')
+    }
+
+    if(!user){
+        res.status(400)
+        throw new Error('Session not found')
+    }
+
+    //Check for user
+    if(!req.user){
+        res.status(401)
+        throw new Error ('User not found')
+    }
+
+    // Make sure the logged in user matches the session user
+    if(user.id.toString() !== req.user.id){
+        res.status(401)
+        throw new Error('User not authorized')
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true})
+
+    res.status(200).json(updatedUser)
+})
+
 module.exports = {
     registerUser,
     loginUser,
-    getMe
+    getMe,
+    updateUser
 }

@@ -46,6 +46,22 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   }
 })
 
+//Update user
+export const updateUser = createAsyncThunk('users/update', async({id, userData} , thunkAPI) => {
+  try {
+      const token = thunkAPI.getState().auth.user.token
+      return authService.updateUser(id, userData, token)
+  } catch (error) {
+      const message = (
+          error.response && 
+          error.response.data && 
+          error.response.data.message) || 
+          error.message || 
+          error.toString()
+          return thunkAPI.rejectWithValue(message)
+  }
+})
+
 export const logout = createAsyncThunk('auth/logout', async () => {
   await authService.logout()
 })
@@ -94,6 +110,24 @@ export const authSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.user = null
       })
+      /*.addCase(updateUser.pending, (state) => {
+        state.isLoading = true
+    })
+    .addCase(updateUser.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.user = state.user.map((item) => {
+            if (item._id === action.payload._id) {
+                return action.payload;
+            }
+            return item;
+        });
+    })
+    .addCase(updateUser.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+    })*/
   },
 })
 

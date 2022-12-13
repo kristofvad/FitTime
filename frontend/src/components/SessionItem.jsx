@@ -31,12 +31,11 @@ function SessionItem({session}) {
   };
 
   return (
-    
     <div className="session">
         <div className="task">
             <div style={{ 'flexGrow': 1 }}>
               <h3>{session.title}</h3>
-              <p className={isActive ? 'show-all' : 'show-less'} onClick={changeStyle}>{session.desc}</p>
+              <p className={isActive ? 'show-less' : 'show-all'} onClick={changeStyle}>{session.desc}</p>
             </div>
             <div className='session_actions' style={{"flexShrink": 0}}>
               <button onClick={form} className="btn_edit">
